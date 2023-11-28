@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import moviesRouter from './api/movies';
-import genresRouter from './api/genres'
+import genresRouter from './api/genres';
 import './db';
 import './seedData'
 import usersRouter from './api/users';
@@ -35,4 +35,4 @@ let server = app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
 
-module.exports = server
+module.exports = server;
