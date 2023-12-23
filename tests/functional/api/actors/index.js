@@ -41,7 +41,35 @@ describe("Actors endpoint", () => {
             });
         });
 
-        
+        describe("GET /api/actors/tmdb/:id", () => {
+            // Test for successfully retrieving actor details for a valid ID
+            it("should return actor details for a valid actor ID", (done) => {
+                const validId = 123; // Example of a valid actor ID
+                request(api)
+                    .get(`/api/actors/tmdb/${validId}`)
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body).to.be.an("object");
+                        // Add more specific assertions for the expected structure of actor details
+                        done(err);
+                    });
+            });
+
+            // Error test: Non-existent actor ID
+            it("should return a 404 for a non-existent actor ID", (done) => {
+                const invalidId = 99999999; // Example of an invalid actor ID
+                request(api)
+                    .get(`/api/actors/tmdb/${invalidId}`)
+                    .set("Accept", "application/json")
+                    .expect(404)
+                    .end((err, res) => {
+                        expect(res.body).to.have.property("status_message", "The actor you requested could not be found.");
+                        done(err);
+                    });
+            });
+        });
+
 
     });
 });
