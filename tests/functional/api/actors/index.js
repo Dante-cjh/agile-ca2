@@ -51,7 +51,7 @@ describe("Actors endpoint", () => {
                     .expect(200)
                     .end((err, res) => {
                         expect(res.body).to.be.an("object");
-                        // Add more specific assertions for the expected structure of actor details
+                        expect(res.body).to.have.property("id", validId);
                         done(err);
                     });
             });
@@ -70,6 +70,34 @@ describe("Actors endpoint", () => {
             });
         });
 
+        describe("GET /api/actors/tmdb/:id/credits", () => {
+            // Test for successfully retrieving actor film credits for a valid ID
+            it("should return actor film credits for a valid actor ID", (done) => {
+                const validId = 123; // Example of a valid actor ID
+                request(api)
+                    .get(`/api/actors/tmdb/${validId}/credits`)
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body).to.be.an("object");
+                        expect(res.body).to.have.property("id", validId);
+                        done(err);
+                    });
+            });
+
+            // Error test: Non-existent actor ID
+            it("should return a 404 for a non-existent actor ID", (done) => {
+                const invalidId = 9999999; // Example of an invalid actor ID
+                request(api)
+                    .get(`/api/actors/tmdb/${invalidId}/credits`)
+                    .set("Accept", "application/json")
+                    .expect(404)
+                    .end((err, res) => {
+                        expect(res.body).to.have.property("status_message", "The resource you requested could not be found.");
+                        done(err);
+                    });
+            });
+        });
 
     });
 });
