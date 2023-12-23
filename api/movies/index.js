@@ -44,8 +44,9 @@ router.get('/tmdb/movie/:id', asyncHandler(async (req, res) => {
     const movie = await getMovie(id);
     if (movie.success === false) {
         res.status(404).json({message: 'The movie you requested could not be found.', status_code: 404});
+    } else {
+        res.status(200).json(movie);
     }
-    res.status(200).json(movie);
 }));
 
 router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {
@@ -92,8 +93,9 @@ router.get('/tmdb/:id/credits', asyncHandler(async (req, res) => {
     const movieCredits = await getMovieCredits(id);
     if(movieCredits.success === false) {
         res.status(404).json(movieCredits);
+    } else {
+        res.status(200).json(movieCredits);
     }
-    res.status(200).json(movieCredits);
 }))
 
 export default router;
