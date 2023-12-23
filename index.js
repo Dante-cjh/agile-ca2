@@ -6,6 +6,7 @@ import './db';
 import defaultErrHandler from './errHandler';
 import moviesRouter from './api/movies';
 import authenticate from './authenticate';
+import './seedData';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/movies',authenticate,  moviesRouter);
 app.use(defaultErrHandler);
 
-app.listen(port, () => {
+let server = app.listen(port, () => {
   console.info(`Server running at ${port}`);
 });
+module.exports = server

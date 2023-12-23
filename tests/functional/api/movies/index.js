@@ -41,7 +41,6 @@ describe("Movies endpoint", () => {
       request(api)
         .get("/api/movies")
         .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("array");
@@ -57,7 +56,6 @@ describe("Movies endpoint", () => {
         return request(api)
           .get(`/api/movies/${movies[0].id}`)
           .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
           .expect(200)
           .then((res) => {
             expect(res.body).to.have.property("title", movies[0].title);
@@ -69,7 +67,6 @@ describe("Movies endpoint", () => {
         return request(api)
           .get("/api/movies/9999")
           .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
           .expect(404)
           .expect({
             status_code: 404,

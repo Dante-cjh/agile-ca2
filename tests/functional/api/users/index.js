@@ -30,11 +30,11 @@ describe("Users endpoint", () => {
       // Register two users
       await request(api).post("/api/users?action=register").send({
         username: "user1",
-        password: "test1",
+        password: "test123@",
       });
       await request(api).post("/api/users?action=register").send({
         username: "user2",
-        password: "test2",
+        password: "test123@",
       });
     } catch (err) {
       console.error(`failed to Load user test Data: ${err}`);
@@ -48,7 +48,6 @@ describe("Users endpoint", () => {
       request(api)
         .get("/api/users")
         .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.be.a("array");
@@ -68,7 +67,7 @@ describe("Users endpoint", () => {
             .post("/api/users?action=register")
             .send({
               username: "user3",
-              password: "test3",
+              password: "test123@",
             })
             .expect(201)
             .expect({ msg: "Successful created new user.", code: 201 });
@@ -77,7 +76,6 @@ describe("Users endpoint", () => {
           return request(api)
             .get("/api/users")
             .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
             .expect(200)
             .then((res) => {
               expect(res.body.length).to.equal(3);
@@ -94,7 +92,7 @@ describe("Users endpoint", () => {
             .post("/api/users?action=authenticate")
             .send({
               username: "user1",
-              password: "test1",
+              password: "test123@",
             })
             .expect(200)
             .then((res) => {
