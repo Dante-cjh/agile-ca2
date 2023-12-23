@@ -13,33 +13,28 @@ import {
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
-    let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
-    [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
+    const movies = await movieModel.find();
+    res.status(200).json(movies);
+}));
 
-    // Parallel execution of counting movies and getting movies using movieModel
-    const [total_results, results] = await Promise.all([
-        movieModel.estimatedDocumentCount(),
-        movieModel.find().limit(limit).skip((page - 1) * limit)
-    ]);
-    const total_pages = Math.ceil(total_results / limit); //Calculate total number of pages (= total No Docs/Number of docs per page)
-
-    //construct return Object and insert into response object
-    const returnObject = {
-        page,
-        total_pages,
-        total_results,
-        results
-    };
-    res.status(200).json(returnObject);
+// Get movie details
+router.get('/:id', asyncHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+    const movie = await movieModel.findByMovieDBId(id);
+    if (movie) {
+        res.status(200).json(movie);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
 }));
 
 // get discovery movies
-router.get('/tmdb', asyncHandler(async (req, res) => {
+router.get('/tmdb/movies', asyncHandler(async (req, res) => {
     const page = req.query.page;
-    const movies = await getMovies(page);
-    if (movies) {
+    try {
+        const movies = await getMovies(page);
         res.status(200).json(movies);
-    } else {
+    }catch (error) {
         res.status(404).json({message: 'The movies you requested could not be found.', status_code: 404});
     }
 }))

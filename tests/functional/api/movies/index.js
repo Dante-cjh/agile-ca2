@@ -75,4 +75,32 @@ describe("Movies endpoint", () => {
       });
     });
   });
+
+  describe("GET /api/movies/tmdb/movies", () => {
+    // Get movie list normally
+    describe("GET /api/movies/tmdb", () => {
+      it("should return a list of discovery movies for a valid page", (done) => {
+        request(api)
+            .get("/api/movies/tmdb/movies?page=1")
+            .set("Accept", "application/json")
+            .expect(200)
+            .end((err, res) => {
+              expect(res.body.results).to.be.an("array");
+              done(err);
+            });
+      });
+
+      // Boundary test: invalid page number
+      it("should return the first page for an invalid page number", (done) => {
+        request(api)
+            .get("/api/movies/tmdb/movies/?page=invalid-page")
+            .set("Accept", "application/json")
+            .expect(200)
+            .end((err, res) => {
+              expect(res.body.page).equal(1);
+              done(err);
+            });
+      });
+    });
+  });
 });
