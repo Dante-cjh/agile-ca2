@@ -164,5 +164,33 @@ describe("Movies endpoint", () => {
                     });
             });
         });
+
+        describe("GET /api/movies/tmdb/:id/reviews", () => {
+            // Test for successfully retrieving movie reviews for a valid movie ID
+            it("should return reviews for a valid movie ID", (done) => {
+                const validId = 550; // Example of a valid movie ID
+                request(api)
+                    .get(`/api/movies/tmdb/${validId}/reviews`)
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body).to.be.an("array");
+                        done(err);
+                    });
+            });
+
+            // Error test: Non-existent movie ID
+            it("should return a 404 for a non-existent movie ID", (done) => {
+                const invalidId = 9999999; // Example of an invalid movie ID
+                request(api)
+                    .get(`/api/movies/tmdb/${invalidId}/reviews`)
+                    .set("Accept", "application/json")
+                    .expect(404)
+                    .end((err, res) => {
+                        expect(res.body).to.have.property("message", "The movie reviews you requested could not be found.");
+                        done(err);
+                    });
+            });
+        });
     });
 });
