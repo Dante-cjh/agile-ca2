@@ -192,5 +192,19 @@ describe("Movies endpoint", () => {
                     });
             });
         });
+
+        describe("GET /api/movies/tmdb/trendingMovie", () => {
+            // Test for successfully retrieving trending movies
+            it("should return a list of trending movies", (done) => {
+                request(api)
+                    .get("/api/movies/tmdb/trendingMovie")
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.results).to.be.an("array");
+                        done(err);
+                    });
+            });
+        });
     });
 });
