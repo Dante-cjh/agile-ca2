@@ -8,10 +8,10 @@ const router = express.Router();
 router.get('/tmdb', asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page);
     const actors = await getActors(page);
-    if (actors) {
-        res.status(200).json(actors);
+    if (actors.success === false) {
+        res.status(404).json(actors);
     } else {
-        res.status(404).json({message: 'The actors you requested could not be found.', status_code: 404});
+        res.status(200).json(actors);
     }
 }))
 
