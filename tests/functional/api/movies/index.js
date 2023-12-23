@@ -133,5 +133,21 @@ describe("Movies endpoint", () => {
                     });
             });
         });
+
+        describe("GET /api/movies/tmdb/upcoming", () => {
+            // Test for successfully retrieving upcoming movies
+            it("should return a list of upcoming movies", (done) => {
+                request(api)
+                    .get("/api/movies/tmdb/upcoming")
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.results).to.be.an("array");
+                        done(err);
+                    });
+            });
+        });
+
+
     });
 });
