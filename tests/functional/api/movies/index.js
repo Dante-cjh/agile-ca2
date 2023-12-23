@@ -148,6 +148,21 @@ describe("Movies endpoint", () => {
             });
         });
 
-
+        describe("GET /api/movies/tmdb/genres", () => {
+            // Test for successfully retrieving movie genres
+            it("should return a list of movie genres", (done) => {
+                request(api)
+                    .get("/api/movies/tmdb/genres")
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.genres).to.be.an("array");
+                        expect(res.body.genres.length).to.be.equal(19);
+                        expect(res.body.genres[0]).to.have.property("id");
+                        expect(res.body.genres[0]).to.have.property("name");
+                        done(err);
+                    });
+            });
+        });
     });
 });
