@@ -90,6 +90,9 @@ router.get('/tmdb/trendingMovie', asyncHandler(async (req, res) => {
 router.get('/tmdb/:id/credits', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const movieCredits = await getMovieCredits(id);
+    if(movieCredits.success === false) {
+        res.status(404).json(movieCredits);
+    }
     res.status(200).json(movieCredits);
 }))
 

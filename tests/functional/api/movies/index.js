@@ -206,5 +206,35 @@ describe("Movies endpoint", () => {
                     });
             });
         });
+
+        describe("GET /api/movies/tmdb/:id/credits", () => {
+            // Test for successfully retrieving movie credits for a valid movie ID
+            it("should return credits for a valid movie ID", (done) => {
+                const validId = 550; // Example of a valid movie ID
+                request(api)
+                    .get(`/api/movies/tmdb/${validId}/credits`)
+                    .set("Accept", "application/json")
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body).to.be.an("object");
+                        // Add more specific assertions for the expected structure of movie credits
+                        done(err);
+                    });
+            });
+
+            // Error test: Non-existent movie ID
+            it("should return a 404 for a non-existent movie ID", (done) => {
+                const invalidId = 9999999; // Example of an invalid movie ID
+                request(api)
+                    .get(`/api/movies/tmdb/${invalidId}/credits`)
+                    .set("Accept", "application/json")
+                    .expect(404)
+                    .end((err, res) => {
+                        expect(res.body).to.have.property("status_message", "The resource you requested could not be found.");
+                        done(err);
+                    });
+            });
+
+        });
     });
 });
