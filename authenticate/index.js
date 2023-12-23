@@ -1,24 +1,27 @@
-import passport from 'passport';
-import passportJWT from 'passport-jwt';
-import UserModel from './../api/users/userModel';
-import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import User from '../api/users/userModel';
 
-dotenv.config();
+const authenticate = async (request, response, next) => {
+    try { 
+        const authHeader = request.headers.authorization;
+        if (!authHeader) throw new Error('No authorization header');
 
-const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
+        const token = authHeader.split(" ")[1];
+        if (!token) throw new Error('Bearer token not found');
 
-let jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = process.env.SECRET;
-const strategy = new JWTStrategy(jwtOptions, async (payload, next) => {
-  const user = await UserModel.findByUserName(payload);
-  if (user) {
-    next(null, user);
-  } else {
-    next(null, false);
-  }
-});
-passport.use(strategy);
+        const decoded = await jwt.verify(token, process.env.SECRET); 
+        console.log(decoded);
 
-export default passport;
+        // Assuming decoded contains a username field
+        const user = await User.findByUserName(decoded.username); 
+        if (!user) {
+            throw new Error('User not found');
+        }
+        request.user = user; // Optionally attach the user to the request for further use
+        next();
+    } catch(err) {
+        next(new Error(`Verification Failed: ${err.message}`));
+    }
+};
+
+export default authenticate;
