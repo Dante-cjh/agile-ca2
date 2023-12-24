@@ -128,7 +128,6 @@ describe("Users endpoint", () => {
         });
         describe('GET /api/user/relevant/movies', () => {
             it('should return favourite movies for an authenticated user', async () => {
-                console.info(user1token);
                 const res = await request(api)
                     .get('/api/user/relevant/movies')
                     .set('Authorization', `BEARER ${user1token}`)
@@ -300,5 +299,23 @@ describe("Users endpoint", () => {
             })
 
         });
+
+        describe('GET /api/user/relevant/toWatch', () => {
+            it('should return must watch movies for an authenticated user', async () => {
+                const res = await request(api)
+                    .get('/api/user/relevant/toWatch')
+                    .set('Authorization', `BEARER ${user1token}`)
+                    .expect(200);
+                expect(res.body.toWatchMovies).to.be.a('array');
+                expect(res.body.toWatchMovies.length).equal(2);
+            });
+
+            it('should deny access for unauthenticated requests', async () => {
+                await request(api)
+                    .get('/api/user/relevant/toWatch')
+                    .expect(500);
+            });
+        });
+
     });
 });

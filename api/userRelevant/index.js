@@ -88,12 +88,12 @@ router.delete('/actors', async (req, res) => {
     }
 });
 
-router.get('/toWatch', async (req, res) => {
-    const username = req.params.username;
+router.get('/toWatch', authenticate, async (req, res) => {
+    const username = req.user.username;
 
     try {
         const user = await User.findOne({username}).select('toWatchMovies');
-        res.status(200).json(user.toWatchMovies);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({message: 'Error retrieving must watch movies'});
     }
