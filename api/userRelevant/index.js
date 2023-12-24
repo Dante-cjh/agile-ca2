@@ -5,7 +5,6 @@ import authenticate from "../../authenticate";
 const router = express.Router(); // eslint-disable-line
 
 router.get('/movies', authenticate, async (req, res) => {
-    // Assuming authenticate middleware adds user info to req.user
     const username = req.user.username;
 
     try {
@@ -48,11 +47,11 @@ router.delete('/movies', authenticate, async (req, res) => {
     }
 });
 
-router.get('/actors', async (req, res) => {
-    const username = req.params.username;
+router.get('/actors', authenticate, async (req, res) => {
+    const username = req.user.username;
     try {
         const user = await User.findOne({username}).select('favouriteActors');
-        res.status(200).json(user.favouriteActors);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({message: 'Error retrieving favourite actors'});
     }

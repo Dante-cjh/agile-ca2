@@ -177,7 +177,6 @@ describe("Users endpoint", () => {
                 });
             })
         });
-
         describe('DELETE /api/user/relevant/movies', () => {
             describe("When user is authenticate" ,() => {
                 it('should successfully remove a favourite movie for an authenticated user', async () => {
@@ -214,5 +213,23 @@ describe("Users endpoint", () => {
             })
 
         });
+
+        describe('GET /api/user/relevant/actors', () => {
+            it('should return favourite actors for an authenticated user', async () => {
+                const res = await request(api)
+                    .get('/api/user/relevant/actors')
+                    .set('Authorization', `BEARER ${user1token}`)
+                    .expect(200);
+                expect(res.body.favouriteActors).to.be.a('array');
+                expect(res.body.favouriteActors.length).equal(1);
+            });
+
+            it('should deny access for unauthenticated requests', async () => {
+                await request(api)
+                    .get('/api/user/relevant/movies')
+                    .expect(500);
+            });
+        });
+
     });
 });
