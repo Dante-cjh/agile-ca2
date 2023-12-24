@@ -316,6 +316,39 @@ describe("Users endpoint", () => {
                     .expect(500);
             });
         });
-
+        describe('POST /api/user/relevant/toWatch', () => {
+            describe("When the token is correct", () => {
+                it('should successfully add a must watch movie for an authenticated user', async () => {
+                    await request(api)
+                        .post('/api/user/relevant/toWatch')
+                        .set('Authorization', `Bearer ${user1token}`)
+                        .send({movieId: 66})
+                        .expect(200)
+                        .then(res => {
+                            expect(res.body.message).to.equal('Must watch movie added successfully');
+                        });
+                });
+                after(() => {
+                    return request(api)
+                        .get("/api/user/relevant/toWatch")
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.toWatchMovies).to.be.a('array');
+                            expect(res.body.toWatchMovies.length).equal(3);
+                            const result = res.body.toWatchMovies.map((id) => id);
+                            expect(result).to.have.members([44, 55, 66]);
+                        });
+                });
+            });
+            describe("When the token is wrong", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .post('/api/user/relevant/toWatch')
+                        .send({movieId: '66'})
+                        .expect(500);
+                });
+            })
+        });
     });
 });

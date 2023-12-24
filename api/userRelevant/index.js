@@ -99,8 +99,8 @@ router.get('/toWatch', authenticate, async (req, res) => {
     }
 });
 
-router.post('/toWatch', async (req, res) => {
-    const userName = req.body.username;
+router.post('/toWatch', authenticate, async (req, res) => {
+    const userName = req.user.username;
     const movieId = req.body.movieId;
 
     try {
