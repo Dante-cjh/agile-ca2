@@ -73,7 +73,7 @@ router.post('/actors', authenticate, async (req, res) => {
 });
 
 router.delete('/actors', async (req, res) => {
-    const userName = req.body.username;
+    const userName =  req.user.username;
     const actorId = req.body.actorId;
 
     try {

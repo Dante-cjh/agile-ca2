@@ -33,8 +33,8 @@ describe("Users endpoint", () => {
                 username: "user1",
                 password: "test123@",
                 favouriteMovies: [11, 22, 33],
-                toWatchMovies: [44],
-                favouriteActors: [11223]
+                toWatchMovies: [44, 55],
+                favouriteActors: [112233, 223344]
             });
             await request(api).post("/api/users?action=register").send({
                 username: "user2",
@@ -221,7 +221,7 @@ describe("Users endpoint", () => {
                     .set('Authorization', `BEARER ${user1token}`)
                     .expect(200);
                 expect(res.body.favouriteActors).to.be.a('array');
-                expect(res.body.favouriteActors.length).equal(1);
+                expect(res.body.favouriteActors.length).equal(2);
             });
 
             it('should deny access for unauthenticated requests', async () => {
@@ -249,9 +249,9 @@ describe("Users endpoint", () => {
                         .expect(200)
                         .then((res) => {
                             expect(res.body.favouriteActors).to.be.a('array');
-                            expect(res.body.favouriteActors.length).equal(2);
+                            expect(res.body.favouriteActors.length).equal(3);
                             const result = res.body.favouriteActors.map((id) => id);
-                            expect(result).to.have.members([11223, 8888]);
+                            expect(result).to.have.members([112233, 223344, 8888]);
                         });
                 });
             });
@@ -263,6 +263,42 @@ describe("Users endpoint", () => {
                         .expect(500);
                 });
             })
+        });
+        describe('DELETE /api/user/relevant/actors', () => {
+            describe("When user is authenticate" ,() => {
+                it('should successfully remove a favourite actor for an authenticated user', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/actors')
+                        .set('Authorization', `Bearer ${user1token}`)
+                        .send({ actorId: 112233 }) // Adjust the movieId as necessary
+                        .expect(200)
+                        .then(res => {
+                            expect(res.body.message).to.equal('Favourite actor removed successfully');
+                        });
+                });
+                after(() => {
+                    return request(api)
+                        .get("/api/user/relevant/actors")
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.favouriteActors).to.be.a('array');
+                            expect(res.body.favouriteActors.length).equal(1);
+                            const result = res.body.favouriteActors.map((id) => id);
+                            expect(result).to.have.members([223344]);
+                        });
+                });
+            });
+
+            describe("When use is not authenticate", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/actors')
+                        .send({ movieId: '123' })
+                        .expect(500);
+                });
+            })
+
         });
     });
 });
