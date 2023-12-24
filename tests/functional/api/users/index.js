@@ -230,6 +230,39 @@ describe("Users endpoint", () => {
                     .expect(500);
             });
         });
-
+        describe('POST /api/user/relevant/actors', () => {
+            describe("When the token is correct", () => {
+                it('should successfully add a favourite actor for an authenticated user', async () => {
+                    await request(api)
+                        .post('/api/user/relevant/actors')
+                        .set('Authorization', `Bearer ${user1token}`)
+                        .send({actorId: 8888})
+                        .expect(200)
+                        .then(res => {
+                            expect(res.body.message).to.equal('Favourite actor added successfully');
+                        });
+                });
+                after(() => {
+                    return request(api)
+                        .get("/api/user/relevant/actors")
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.favouriteActors).to.be.a('array');
+                            expect(res.body.favouriteActors.length).equal(2);
+                            const result = res.body.favouriteActors.map((id) => id);
+                            expect(result).to.have.members([11223, 8888]);
+                        });
+                });
+            });
+            describe("When the token is wrong", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .post('/api/user/relevant/actors')
+                        .send({actorId: '123'})
+                        .expect(500);
+                });
+            })
+        });
     });
 });

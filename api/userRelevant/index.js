@@ -57,8 +57,8 @@ router.get('/actors', authenticate, async (req, res) => {
     }
 });
 
-router.post('/actors', async (req, res) => {
-    const userName = req.body.username;
+router.post('/actors', authenticate, async (req, res) => {
+    const userName = req.user.username;
     const actorId = req.body.actorId;
     try {
         await User.findOneAndUpdate(
