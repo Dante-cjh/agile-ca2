@@ -64,7 +64,6 @@ describe("Review endpoint", () => {
                 content: "I found the love. For me~~. I love it!",
                 rating: "5"
             });
-            console.log("add 1 success")
             await request(api).post("/api/reviews/review")
                 .set('Authorization', `Bearer ${user1token}`)
                 .send({
@@ -99,8 +98,28 @@ describe("Review endpoint", () => {
                 .get(`/${movieId}`)
                 .expect(404);
         });
-
     })
 
+    describe('GET /author/review API Tests', () => {
 
+        it('should retrieve reviews by the logged-in author', (done) => {
+            request(api)
+                .get('/api/reviews/author/review')
+                .set('Authorization', `Bearer ${user1token}`)
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body).to.be.an('array');
+                    expect(res.body.length).equal(2);
+                    done();
+                });
+        });
+
+        it('should deny access for unauthenticated requests', (done) => {
+            request(api)
+                .get('/api/author/review')
+                .expect(404, done)
+        });
+
+    });
 })
