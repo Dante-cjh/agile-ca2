@@ -8,14 +8,12 @@ const router = express.Router();
 // Get all reviews
 router.get('/:movieId', asyncHandler(async (req, res) => {
     const movieId = req.params.movieId;
-
     try {
         const reviews = await Review.find({movieId})
         res.status(200).json(reviews);
     } catch (error) {
         res.status(404).message("Can not find the movie")
     }
-
 }));
 
 router.get('/author/review', authenticate, asyncHandler(async (req, res) => {

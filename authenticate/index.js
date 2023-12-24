@@ -9,8 +9,7 @@ const authenticate = async (request, response, next) => {
         const token = authHeader.split(" ")[1];
         if (!token) throw new Error('Bearer token not found');
 
-        const decoded = await jwt.verify(token, process.env.SECRET); 
-        console.log(decoded);
+        const decoded = await jwt.verify(token, process.env.SECRET);
 
         // Assuming decoded contains a username field
         const user = await User.findByUserName(decoded.username); 
