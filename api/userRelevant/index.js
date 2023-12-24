@@ -16,8 +16,8 @@ router.get('/movies', authenticate, async (req, res) => {
     }
 });
 
-router.post('/movies', async (req, res) => {
-    const userName = req.body.username;
+router.post('/movies', authenticate, async (req, res) => {
+    const userName = req.user.username;
     const movieId = req.body.movieId;
 
     try {
