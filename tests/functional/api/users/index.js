@@ -107,5 +107,41 @@ describe("Users endpoint", () => {
                 });
             });
         });
+        describe('User Relevant Movies API Tests', () => {
+            beforeEach((done) => {
+                request(api)
+                    .post('/api/users?action=authenticate')
+                    .send({
+                        username: 'user1',
+                        password: 'test123@',
+                    })
+                    .expect(200)
+                    .end((err, res) => {
+                        if (err) return done(err);
+                        expect(res.body.success).to.be.true;
+                        expect(res.body.token).to.not.be.undefined;
+                        user1token = res.body.token.substring(7);
+                        done();
+                    });
+            });
+            describe('GET /api/user/relevant/movies', () => {
+                it('should return favourite movies for an authenticated user', async () => {
+                    console.info(user1token)
+                    const res = await request(api)
+                        .get('/api/user/relevant/movies')
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200);
+                    expect(res.body.favouriteMovies).to.be.a('array');
+                    expect(res.body.favouriteMovies.length).equal(3);
+                });
+
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .get('/api/user/relevant/movies')
+                        .expect(500);
+                });
+            });
+
+        });
     });
 });

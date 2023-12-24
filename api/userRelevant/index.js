@@ -1,17 +1,18 @@
 import express from 'express';
 import User from '../users/userModel';
-import jwt from 'jsonwebtoken';
+import authenticate from "../../authenticate";
 
 const router = express.Router(); // eslint-disable-line
 
-router.get('/:username/movies', async (req, res) => {
-    const username = req.params.username;
+router.get('/movies', authenticate, async (req, res) => {
+    // Assuming authenticate middleware adds user info to req.user
+    const username = req.user.username;
 
     try {
-        const user = await User.findOne({username}).select('favouriteMovies');
-        res.status(200).json(user.favouriteMovies);
+        const user = await User.findOne({ username }).select('favouriteMovies');
+        res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({message: 'Error retrieving favourite movies'});
+        res.status(401).json({ message: 'Error retrieving favourite movies' });
     }
 });
 
@@ -47,7 +48,7 @@ router.delete('/movies', async (req, res) => {
     }
 });
 
-router.get('/:username/actors', async (req, res) => {
+router.get('/actors', async (req, res) => {
     const username = req.params.username;
     try {
         const user = await User.findOne({username}).select('favouriteActors');
@@ -88,7 +89,7 @@ router.delete('/actors', async (req, res) => {
     }
 });
 
-router.get('/:username/toWatch', async (req, res) => {
+router.get('/toWatch', async (req, res) => {
     const username = req.params.username;
 
     try {
