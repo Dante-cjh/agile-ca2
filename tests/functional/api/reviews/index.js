@@ -27,26 +27,32 @@ describe("Review endpoint", () => {
         }
     });
     beforeEach(async () => {
-        // Register user
-        await request(api).post("/api/users?action=register").send({
-            username: "user1",
-            password: "test123@",
-            favouriteMovies: [11, 22, 33],
-            toWatchMovies: [44, 55],
-            favouriteActors: [112233, 223344]
-        });
+        // delete all the user
+        try {
+            await User.deleteMany();
+            // Register user
+            await request(api).post("/api/users?action=register").send({
+                username: "user1",
+                password: "test123@",
+                favouriteMovies: [11, 22, 33],
+                toWatchMovies: [44, 55],
+                favouriteActors: [112233, 223344]
+            });
 
-        // Authenticate user
-        let res = await request(api)
-            .post('/api/users?action=authenticate')
-            .send({
-                username: 'user1',
-                password: 'test123@',
-            })
-            .expect(200);
-        expect(res.body.success).to.be.true;
-        expect(res.body.token).to.not.be.undefined;
-        user1token = res.body.token.substring(7);
+            // Authenticate user
+            let res = await request(api)
+                .post('/api/users?action=authenticate')
+                .send({
+                    username: 'user1',
+                    password: 'test123@',
+                })
+                .expect(200);
+            expect(res.body.success).to.be.true;
+            expect(res.body.token).to.not.be.undefined;
+            user1token = res.body.token.substring(7);
+        } catch (err){
+            console.error(`failed to Load user test Data: ${err}`);
+        }
         try {
             await Review.deleteMany();
             // Register two reviews
@@ -68,7 +74,7 @@ describe("Review endpoint", () => {
                 rating: "1"
             });
         } catch (err) {
-            console.error(`failed to Load user test Data: ${err}`);
+            console.error(`failed to Load review test Data: ${err}`);
         }
     });
     afterEach(() => {
@@ -95,4 +101,6 @@ describe("Review endpoint", () => {
         });
 
     })
+
+
 })
