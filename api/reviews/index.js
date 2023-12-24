@@ -1,6 +1,7 @@
 import Review from './reviewModel';
 import asyncHandler from 'express-async-handler';
 import express from 'express';
+import authenticate from "../../authenticate";
 
 const router = express.Router();
 
@@ -17,9 +18,8 @@ router.get('/:movieId', asyncHandler(async (req, res) => {
 
 }));
 
-router.get('/:author/reviews', asyncHandler(async (req, res) => {
-    const author = req.params.author;
-
+router.get('/author/review', authenticate, asyncHandler(async (req, res) => {
+    const author = req.user.username;
     try {
         const reviews = await Review.find({ author: author });
         res.status(200).json(reviews);
@@ -28,11 +28,11 @@ router.get('/:author/reviews', asyncHandler(async (req, res) => {
     }
 }))
 
-router.post('/review', asyncHandler(async (req, res) => {
+router.post('/review', authenticate, asyncHandler(async (req, res) => {
     try {
         const id = req.body.id;
         const movieId = req.body.movieId;
-        const author = req.body.author;
+        const author = req.user.username;
         const content = req.body.content;
         const rating = req.body.rating;
 
@@ -48,13 +48,13 @@ router.post('/review', asyncHandler(async (req, res) => {
         // 保存到 MongoDB
         await newReview.save();
 
-        res.status(201).json(newReview);
+        res.status(201).json({message: "Adding new reviews successfully"});
     } catch (error) {
         res.status(404).json({message: 'Error adding new reviews'});
     }
 }))
 
-router.delete('/review', asyncHandler(async (req, res) => {
+router.delete('/review', authenticate, asyncHandler(async (req, res) => {
     try {
         const reviewId = req.body.id;
         await Review.findOneAndDelete({ id: reviewId });
