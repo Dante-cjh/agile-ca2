@@ -100,7 +100,7 @@ describe("Review endpoint", () => {
         });
     })
 
-    describe('GET /author/review API Tests', () => {
+    describe('GET api/reviews/author/review', () => {
 
         it('should retrieve reviews by the logged-in author', (done) => {
             request(api)
@@ -121,5 +121,38 @@ describe("Review endpoint", () => {
                 .expect(404, done)
         });
 
+    });
+
+    describe('POST /api/reviews/review', () => {
+
+        it('should successfully add a new review', (done) => {
+            request(api)
+                .post('/api/reviews/review')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send({
+                    id: '123',
+                    movieId: '456',
+                    content: 'Great movie! Perfect movie!',
+                    rating: '5'
+                })
+                .expect(201)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body.message).to.equal("Adding new reviews successfully");
+                    done();
+                });
+        });
+
+        it('should deny access for unauthenticated requests', (done) => {
+            request(api)
+                .post('/api/review')
+                .send({
+                    id: '789',
+                    movieId: '1011',
+                    content: 'Average movie',
+                    rating: '3'
+                })
+                .expect(404, done);
+        });
     });
 })
