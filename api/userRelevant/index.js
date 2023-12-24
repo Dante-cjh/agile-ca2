@@ -32,8 +32,8 @@ router.post('/movies', authenticate, async (req, res) => {
     }
 });
 
-router.delete('/movies', async (req, res) => {
-    const userName = req.body.username;
+router.delete('/movies', authenticate, async (req, res) => {
+    const userName =  req.user.username;
     const movieId = req.body.movieId;
 
     try {

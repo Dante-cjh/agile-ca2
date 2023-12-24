@@ -168,14 +168,51 @@ describe("Users endpoint", () => {
                         });
                 });
             });
+            describe("When the token is wrong", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .post('/api/user/relevant/movies')
+                        .send({movieId: '123'})
+                        .expect(500);
+                });
+            })
+        });
 
-
-            it('should deny access for unauthenticated requests', async () => {
-                await request(api)
-                    .post('/api/user/relevant/movies')
-                    .send({movieId: '123'})
-                    .expect(500);
+        describe('DELETE /api/user/relevant/movies', () => {
+            describe("When user is authenticate" ,() => {
+                it('should successfully remove a favourite movie for an authenticated user', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/movies')
+                        .set('Authorization', `Bearer ${user1token}`)
+                        .send({ movieId: 11 }) // Adjust the movieId as necessary
+                        .expect(200)
+                        .then(res => {
+                            expect(res.body.message).to.equal('Favourite movie removed successfully');
+                        });
+                });
+                after(() => {
+                    return request(api)
+                        .get("/api/user/relevant/movies")
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.favouriteMovies).to.be.a('array');
+                            expect(res.body.favouriteMovies.length).equal(2);
+                            const result = res.body.favouriteMovies.map((id) => id);
+                            expect(result).to.have.members([22, 33]);
+                        });
+                });
             });
+
+            describe("When use is not authenticate", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/movies')
+                        .send({ movieId: '123' })
+                        .expect(500);
+                });
+            })
+
         });
     });
 });
