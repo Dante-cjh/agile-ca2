@@ -350,5 +350,41 @@ describe("Users endpoint", () => {
                 });
             })
         });
+        describe('DELETE /api/user/relevant/toWatch', () => {
+            describe("When user is authenticate" ,() => {
+                it('should successfully remove a must watch movie for an authenticated user', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/toWatch')
+                        .set('Authorization', `Bearer ${user1token}`)
+                        .send({ movieId: 44 }) // Adjust the movieId as necessary
+                        .expect(200)
+                        .then(res => {
+                            expect(res.body.message).to.equal('Must watch movie removed successfully');
+                        });
+                });
+                after(() => {
+                    return request(api)
+                        .get("/api/user/relevant/toWatch")
+                        .set('Authorization', `BEARER ${user1token}`)
+                        .expect(200)
+                        .then((res) => {
+                            expect(res.body.toWatchMovies).to.be.a('array');
+                            expect(res.body.toWatchMovies.length).equal(1);
+                            const result = res.body.toWatchMovies.map((id) => id);
+                            expect(result).to.have.members([55]);
+                        });
+                });
+            });
+
+            describe("When use is not authenticate", () => {
+                it('should deny access for unauthenticated requests', async () => {
+                    await request(api)
+                        .delete('/api/user/relevant/toWatch')
+                        .send({ movieId: '44' })
+                        .expect(500);
+                });
+            })
+
+        });
     });
 });

@@ -116,7 +116,7 @@ router.post('/toWatch', authenticate, async (req, res) => {
 });
 
 router.delete('/toWatch', async (req, res) => {
-    const userName = req.body.username;
+    const userName = req.user.username;
     const movieId = req.body.movieId;
 
     try {
