@@ -115,10 +115,14 @@ describe("Review endpoint", () => {
                 });
         });
 
-        it('should deny access for unauthenticated requests', (done) => {
-            request(api)
-                .get('/api/author/review')
-                .expect(404, done)
+        it('should deny access for unauthenticated requests', () => {
+            return request(api)
+                .get('/api/reviews/author/review')
+                .expect(500)
+                .catch((err)=>{
+                    expect(err).to.exist;
+                    expect(err.message).to.include('Verification Failed: No authorization header');
+            });
         });
 
     });
@@ -143,16 +147,42 @@ describe("Review endpoint", () => {
                 });
         });
 
-        it('should deny access for unauthenticated requests', (done) => {
-            request(api)
-                .post('/api/review')
-                .send({
-                    id: '789',
-                    movieId: '1011',
-                    content: 'Average movie',
-                    rating: '3'
-                })
-                .expect(404, done);
+        it('should deny access for unauthenticated requests', async () => {
+            return await request(api)
+                .post('/api/reviews/review')
+                .expect(500)
+                .catch((err)=>{
+                    expect(err).to.exist;
+                    expect(err.message).to.include('Verification Failed: No authorization header');
+                });
         });
+    });
+
+    describe('DELETE /api/reviews/review', () => {
+
+        it('should successfully delete a review', (done) => {
+            const reviewId = '998877'; // Replace with a valid review ID
+            request(api)
+                .delete('/api/reviews/review')
+                .set('Authorization', `Bearer ${user1token}`)
+                .send({ id: reviewId })
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body.message).to.equal('Review successfully deleted');
+                    done();
+                });
+        });
+
+        it('should deny access for unauthenticated requests', async () => {
+            return await request(api)
+                .delete('/api/reviews/review')
+                .expect(500)
+                .catch((err)=>{
+                    expect(err).to.exist;
+                    expect(err.message).to.include('Verification Failed: No authorization header');
+                });
+        });
+
     });
 })

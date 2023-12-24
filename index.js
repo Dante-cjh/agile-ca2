@@ -23,7 +23,7 @@ app.use('/api/movies',  moviesRouter);
 app.use('/api/actors', actorsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/user/relevant', authenticate, userRelevant);
-// app.use(defaultErrHandler);
+app.use(defaultErrHandler);
 
 let server = app.listen(port, () => {
   console.info(`Server running at ${port}`);

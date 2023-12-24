@@ -17,12 +17,12 @@ router.get('/:movieId', asyncHandler(async (req, res) => {
 }));
 
 router.get('/author/review', authenticate, asyncHandler(async (req, res) => {
-    const author = req.user.username;
     try {
+        const author = req.user.username;
         const reviews = await Review.find({ author: author });
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).json({message: 'Find movie reviews failed'});
+        res.status(401).json({message: 'Find movie reviews failed'});
     }
 }))
 
