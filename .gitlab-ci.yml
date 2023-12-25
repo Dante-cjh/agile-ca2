@@ -41,7 +41,7 @@ test_api:
   stage: test
   script:
     - npm test
-    - npm coverage
+    - npm run coverage
 
 deploy_staging:
   image: ruby:latest
