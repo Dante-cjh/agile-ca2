@@ -22,7 +22,8 @@
     "compile:all": "npm-run-all compile:models compile:errHandler compile:authenticate compile:init-dev compile:seed compile:app compile:db copy:all",
     "start:prod": "cross-env  MONGO_DB=mongodb://localhost/test NODE_ENV=development node build/index.js",
     "postinstall": "rimraf ./build && npm run compile:all",
-    "test": "cross-env NODE_ENV=test SEED_DB=true nyc --reporter=text-lcov mocha | coveralls",
+    "test": "cross-env NODE_ENV=test SEED_DB=false nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "babel-node index.js",
     "dev": " nodemon --exec npm start"
   },
