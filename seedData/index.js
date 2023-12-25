@@ -1,10 +1,9 @@
 import userModel from '../api/users/userModel';
-import users from '../initialise-dev/users';
+import users from './users';
 import dotenv from 'dotenv';
 import movieModel from '../api/movies/movieModel';
-import movies from '../initialise-dev/movies';
-import ReviewModel from "../api/reviews/reviewModel";
-import reviews from "../initialise-dev/reviews";
+import movies from './movies';
+import reviews from "./reviews";
 import reviewModel from "../api/reviews/reviewModel";
 
 dotenv.config();

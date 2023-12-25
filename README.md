@@ -2,6 +2,10 @@
 
 Name: Jiahan Chen
 
+[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)
+
+
+
 ## API endpoints.
 
 - `GET /api/users` - Retrieves a list of all registered users.
@@ -182,7 +186,7 @@ Sspecify the URL of the Coveralls webpage that contains your tests' code coverag
 
 | File                             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
 | -------------------------------- | ------- | -------- | ------- | ------- | ----------------- |
-| All files                        | 85.95   | 57.14    | 89.49   | 89.1    |                   |
+| All files                        | 91.83   | 61.25    | 94.52   | 95.37   |                   |
 | movies-api-cicd                  | 100     | 100      | 100     | 100     |                   |
 | index.js                         | 100     | 100      | 100     | 100     |                   |
 | movies-api-cicd/api              | 93.22   | 58.24    | 93.33   | 96      |                   |
@@ -206,13 +210,10 @@ Sspecify the URL of the Coveralls webpage that contains your tests' code coverag
 | index.js                         | 83.33   | 100      | 50      | 81.81   | 11,14             |
 | movies-api-cicd/errHandler       | 80      | 50       | 100     | 80      |                   |
 | index.js                         | 80      | 50       | 100     | 80      | 5                 |
-| movies-api-cicd/initialise-dev   | 100     | 100      | 100     | 100     |                   |
+| movies-api-cicd/seedData         | 95.08   | 52.17    | 100     | 100     |                   |
+| index.js                         | 94.54   | 52.17    | 100     | 100     | 2-50              |
 | movies.js                        | 100     | 100      | 100     | 100     |                   |
 | reviews.js                       | 100     | 100      | 100     | 100     |                   |
 | users.js                         | 100     | 100      | 100     | 100     |                   |
-| movies-api-cicd/seedData         | 21.05   | 6.52     | 8.33    | 29.72   |                   |
-| index.js                         | 18.18   | 6.52     | 8.33    | 25.71   | 14-49,52-54       |
-| movies.js                        | 100     | 100      | 100     | 100     |                   |
-
 
 State any other independent learning you achieved while completing this assignment.
