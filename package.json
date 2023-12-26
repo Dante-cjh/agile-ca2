@@ -23,7 +23,7 @@
     "start:prod": "cross-env  MONGO_DB=mongodb://localhost/test NODE_ENV=development node build/index.js",
     "postinstall": "rimraf ./build && npm run compile:all",
     "test": "cross-env NODE_ENV=test SEED_DB=false nyc mocha",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --repo-token=COVERALLS_REPO_TOKEN",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "babel-node index.js",
     "dev": " nodemon --exec npm start"
   },
