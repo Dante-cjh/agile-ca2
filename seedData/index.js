@@ -47,7 +47,7 @@ export async function loadReviews() {
   }
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.SEED_DB) {
   loadUsers();
   loadMovies();
   loadReviews();

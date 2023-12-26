@@ -39,6 +39,8 @@ Build_api:
 
 test_api:
   stage: test
+  only:
+    - main
   script:
     - npm test
     - npm run coverage
