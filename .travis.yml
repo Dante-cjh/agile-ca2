@@ -5,18 +5,18 @@ node_js:
 
 # 缓存配置，以加快构建速度
 cache:
-directories:
-  - node_modules
-  - "$CI_PROJECT_DIR/.npm"
-  - build
+  directories:
+    - node_modules
+    - "$CI_PROJECT_DIR/.npm"
+    - build
 
 # 服务配置
 services:
   - mongodb
 
 env:
-global:
-  - MONGO_DB=mongodb://localhost/test
+  global:
+    - MONGO_DB=mongodb://localhost/test
 # 安装阶段
 install:
   - npm ci
