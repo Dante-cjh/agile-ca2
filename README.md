@@ -182,7 +182,7 @@ Vercel: https://agile-ca2-60ppkwkjn-jiahan-chens-projects.vercel.app/
 
 netlify: https://soft-rolypoly-fa0044.netlify.app/
 
-
+FUCK
 ## Independent Learning (if relevant)
 
 Sspecify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
