@@ -41,8 +41,6 @@ test_api:
   stage: test
   script:
     - npm run test:coveralls
-  after_script:
-    - npm run coverage
 
 deploy_staging:
   image: node:latest
