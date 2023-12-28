@@ -175,11 +175,7 @@ NOTE: Your test code should only contain the test cases you implemented. Your as
 Specify the URLs of your deployments, both staging and production, e.g.
 
 https://movies-api-staging-doc-9200283e0b04.herokuapp.com/api/movies
-https://agile-ca2.vercel.app/
 
-[ I do NOT need the URL of the app on your Heroku dashboard as this is private, e.g.
-
-https://dashboard.heroku.com/apps/movies-api-staging-doc ]
 
 ## Independent Learning (if relevant)
 
