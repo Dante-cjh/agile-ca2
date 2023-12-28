@@ -2,7 +2,7 @@
 
 Name: Jiahan Chen
 
-[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)
+[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)[![Netlify Status](https://api.netlify.com/api/v1/badges/e9c8cfdf-e1b9-4a0e-83ab-f644f3750dfe/deploy-status)](https://app.netlify.com/sites/soft-rolypoly-fa0044/deploys)
 
 
 
