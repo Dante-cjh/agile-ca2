@@ -2,7 +2,9 @@
 
 Name: Jiahan Chen
 
-[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)[![Netlify Status](https://api.netlify.com/api/v1/badges/e9c8cfdf-e1b9-4a0e-83ab-f644f3750dfe/deploy-status)](https://app.netlify.com/sites/soft-rolypoly-fa0044/deploys)
+[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e9c8cfdf-e1b9-4a0e-83ab-f644f3750dfe/deploy-status?branch=develop)](https://app.netlify.com/sites/soft-rolypoly-fa0044/deploys)
 
 
 
@@ -174,7 +176,11 @@ NOTE: Your test code should only contain the test cases you implemented. Your as
 
 Specify the URLs of your deployments, both staging and production, e.g.
 
-https://movies-api-staging-doc-9200283e0b04.herokuapp.com/api/movies
+
+
+Vercel: https://agile-ca2-60ppkwkjn-jiahan-chens-projects.vercel.app/
+
+
 
 
 ## Independent Learning (if relevant)
