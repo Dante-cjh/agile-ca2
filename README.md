@@ -180,7 +180,7 @@ Specify the URLs of your deployments, both staging and production, e.g.
 
 Vercel: https://agile-ca2-60ppkwkjn-jiahan-chens-projects.vercel.app/
 
-
+https://soft-rolypoly-fa0044.netlify.app/
 
 
 ## Independent Learning (if relevant)
