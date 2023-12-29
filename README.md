@@ -182,7 +182,7 @@ Vercel: https://agile-ca2-60ppkwkjn-jiahan-chens-projects.vercel.app/
 
 netlify: https://soft-rolypoly-fa0044.netlify.app/
 
-FUCK
+Heroku: 
 ## Independent Learning (if relevant)
 
 Sspecify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
@@ -219,4 +219,6 @@ Sspecify the URL of the Coveralls webpage that contains your tests' code coverag
 | reviews.js                       | 100     | 100      | 100     | 100     |                   |
 | users.js                         | 100     | 100      | 100     | 100     |                   |
 
-State any other independent learning you achieved while completing this assignment.
+
+
+To incorporate the generation and publication of the code coverage reports as part of the CI pipeline, I firstly use the Gitlab to send coverall files to Coverall. However, the Coverall cannot receive the whole coverall rate and it cannot show the rate in the page. I have tried many times and many ways. Lastly, we decide to use Travis CI to link the Coverall, which is recommended by official website. So, I add .travis.yml file in the repository and when I push files to Gitlab, it will link to Travis automatically and travis will send the coverall codes to official website.

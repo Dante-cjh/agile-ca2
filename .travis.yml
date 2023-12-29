@@ -14,13 +14,15 @@ cache:
 services:
   - mongodb
 
+env:
+  global:
+    - MONGO_DB=mongodb://localhost/test
+
+# 仅在 main 分支上运行
 branches:
   only:
     - main
 
-env:
-  global:
-    - MONGO_DB=mongodb://localhost/test
 # 安装阶段
 install:
   - npm ci
