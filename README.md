@@ -6,6 +6,10 @@ Name: Jiahan Chen
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e9c8cfdf-e1b9-4a0e-83ab-f644f3750dfe/deploy-status?branch=develop)](https://app.netlify.com/sites/soft-rolypoly-fa0044/deploys)
 
+[![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)
+
+[![Build Status](https://app.travis-ci.com/liang765407782/jhc-coveralls.svg?branch=main)](https://app.travis-ci.com/liang765407782/jhc-coveralls)
+
 
 
 ## API endpoints.
@@ -168,10 +172,6 @@ database connected to test on ac-fledhkd-shard-00-01.lvrdru0.mongodb.net
   49 passing (18s)
 ~~~
 
-[ Markdown Tip: By wrapping the test results in fences (~~~), GitHub will display it in a 'box' and preserve any formatting.]
-
-NOTE: Your test code should only contain the test cases you implemented. Your assignment submission  must remove the test cases (it blocks) developed in the labs.
-
 ## Deployments.
 
 Specify the URLs of your deployments, both staging and production, e.g.
@@ -222,3 +222,7 @@ Sspecify the URL of the Coveralls webpage that contains your tests' code coverag
 
 
 To incorporate the generation and publication of the code coverage reports as part of the CI pipeline, I firstly use the Gitlab to send coverall files to Coverall. However, the Coverall cannot receive the whole coverall rate and it cannot show the rate in the page. I have tried many times and many ways. Lastly, we decide to use Travis CI to link the Coverall, which is recommended by official website. So, I add .travis.yml file in the repository and when I push files to Gitlab, it will link to Travis automatically and travis will send the coverall codes to official website.
+
+![image-20231229170842940](imgs/image-20231229170842940.png)
+
+https://coveralls.io/gitlab/Dante-cjh/agile-ca2
