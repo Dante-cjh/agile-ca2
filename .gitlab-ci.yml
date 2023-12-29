@@ -2,26 +2,28 @@
 image: node:latest
 
 variables:
-   npm_config_cache: "$CI_PROJECT_DIR/.npm"
-   NODE_ENV: 'test'
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  NODE_ENV: 'test'
 
 cache:
-   key:
-     files:
-        - package.json
-   paths:
-      - .npm
-      - node_modules
-      - build
+  key:
+    files:
+      - package.json
+  paths:
+    - .npm
+    - node_modules
+    - build
 
 services:
-   - mongo
+  - mongo
 
 stages:
   - install
   - build
   - test
   - staging
+  - deployment
+  - delivery
 
 # Jobs:
 
@@ -33,7 +35,7 @@ install_dependencies:
 Build_api:
   stage: build
   before_script:
-     - npm run clean
+    - npm run clean
   script:
     - npm run build
 
@@ -60,3 +62,31 @@ deploy_staging:
     - echo "Already Deploy Netlify to pre publish server"
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Already Deploy Heroku to pre publish server"
+
+# Auto
+continuous_deployment_production:
+  image: ruby:latest
+  only:
+    - main
+  stage: deployment
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - echo "Automated deployment to production servers"
+
+continuous_delivery_production:
+  image: ruby:latest
+  only:
+    - develop
+  stage: delivery
+  when: manual
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - echo "Manual delivery to production servers"
