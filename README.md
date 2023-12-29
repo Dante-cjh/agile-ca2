@@ -4,8 +4,6 @@ Name: Jiahan Chen
 
 
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/e9c8cfdf-e1b9-4a0e-83ab-f644f3750dfe/deploy-status?branch=develop)](https://app.netlify.com/sites/soft-rolypoly-fa0044/deploys)
-
 [![Coverage Status](https://coveralls.io/repos/gitlab/Dante-cjh/agile-ca2/badge.svg?branch=main)](https://coveralls.io/gitlab/Dante-cjh/agile-ca2?branch=main)
 
 [![Build Status](https://app.travis-ci.com/liang765407782/jhc-coveralls.svg?branch=main)](https://app.travis-ci.com/liang765407782/jhc-coveralls)
@@ -174,18 +172,25 @@ database connected to test on ac-fledhkd-shard-00-01.lvrdru0.mongodb.net
 
 ## Deployments.
 
-Specify the URLs of your deployments, both staging and production, e.g.
+staging:
+
+https://movie-api-staging-cjh-0282dd2ac2cc.herokuapp.com/api/movies
+
+https://movie-api-staging-cjh-0282dd2ac2cc.herokuapp.com/api/movies/tmdb/movies
 
 
 
-Vercel: https://agile-ca2-60ppkwkjn-jiahan-chens-projects.vercel.app/
+Production:
 
-netlify: https://soft-rolypoly-fa0044.netlify.app/
+https://movie-api-staging-cjh-0282dd2ac2cc.herokuapp.com/api/movies
 
-Heroku: 
+https://movie-api-staging-cjh-0282dd2ac2cc.herokuapp.com/api/movies/tmdb/movies
+
+
+
 ## Independent Learning (if relevant)
 
-Sspecify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
+Specify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
 
 | File                             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
 | -------------------------------- | ------- | -------- | ------- | ------- | ----------------- |
